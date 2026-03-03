@@ -62,8 +62,8 @@
       // way that non-critical warnings and error messages are presented to the
       // user.
       function unityShowBanner(msg, type) {
-        // 불필요한 로그 필터링
-        if (msg.includes("AudioContext") || msg.includes("OPENGL LOG")) return;
+        // 불필요한 로그 필터링 (대소문자 구분 없이, 더 광범위하게)
+        if (/AudioContext|OPENGL|Context level|shader|program|texture/i.test(msg)) return;
 
         var warningBanner = document.querySelector("#unity-warning");
         function updateBannerVisibility() {
@@ -95,13 +95,13 @@
         productName: "MakeTemplete",
         productVersion: "0.1.0",
         showBanner: unityShowBanner,
-        // 불필요한 콘솔 로그 필터링
+        // 불필요한 콘솔 로그 필터링 (대소문자 구분 없이, 더 광범위하게)
         print: function(message) {
-          if (message.includes("OPENGL LOG") || message.includes("AudioContext")) return;
+          if (/AudioContext|OPENGL|Context level|shader|program|texture/i.test(message)) return;
           console.log(message);
         },
         printErr: function(message) {
-          if (message.includes("OPENGL LOG") || message.includes("AudioContext")) return;
+          if (/AudioContext|OPENGL|Context level|shader|program|texture/i.test(message)) return;
           console.error(message);
         },
       };
